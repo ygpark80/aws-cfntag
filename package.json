@@ -1,0 +1,11 @@
+{
+  "name": "aws-cfntag",
+  "bin": {
+    "cfntag": "./bin/cfntag"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "packageManager": "yarn@4.0.2"
+}
