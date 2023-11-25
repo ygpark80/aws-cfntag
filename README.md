@@ -12,7 +12,7 @@ npm install -g aws-cfntag
 cfntag --stack-name my-stack --tags Key1=Value1,Key2=Value2
 
 # Or run with npx
-npx cfntag --stack-name my-stack --tags Key1=Value1,Key2=Value2
+npx -p aws-cfntag cfntag --stack-name my-stack --tags Key1=Value1,Key2=Value2
 ```
 
 In this command, replace `my-stack` with the name of your stack, and `Key1=Value1,Key2=Value2` with your tags.
