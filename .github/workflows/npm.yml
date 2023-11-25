@@ -1,0 +1,31 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          registry-url: https://registry.npmjs.org/
+      
+      - name: Update version in package.json
+        run: |
+          VERSION=$(cat VERSION | tr -d 'v')
+          for file in $(find . -name 'node_modules' -prune -o -name 'package.json' -print); do
+            jq ".version = \"$VERSION\"" $file > temp.json
+            mv temp.json $file
+          done
+
+      - run: npm ci
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
