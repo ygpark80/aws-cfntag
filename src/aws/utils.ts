@@ -1,7 +1,13 @@
 import { StackResource } from "@aws-sdk/client-cloudformation"
 
+export enum TagResourceResult {
+    Success = "✅",
+    Error = "❌",
+    Unknown = "❓",
+}
+
 export interface ResourceTagger {
-    tagResource(resource: StackResource, tags: Record<string, string>): Promise<void>
+    tagResource(resource: StackResource, tags: Record<string, string>): Promise<TagResourceResult>
 }
 
 export function region(resource: StackResource) {

@@ -1,13 +1,11 @@
-import { ResourceTagger } from "."
+import { ResourceTagger, TagResourceResult } from "."
 import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { IAMClient, TagRoleCommand, TagUserCommand } from "@aws-sdk/client-iam"
 
 export default class IAM implements ResourceTagger {
 
-    async tagResource(resource: StackResource, tags: Record<string, string>): Promise<void> {
-        const region = utils.region(resource)
-        const accountId = utils.accountId(resource)
+    async tagResource(resource: StackResource, tags: Record<string, string>) {
         const iam = new IAMClient()
 
         switch (resource.ResourceType) {
@@ -16,11 +14,10 @@ export default class IAM implements ResourceTagger {
                     const RoleName = resource.PhysicalResourceId!
                     const Tags = Object.entries(tags).map(([Key, Value]) => ({ Key, Value }))
                     await iam.send(new TagRoleCommand({ RoleName, Tags }))
-                    utils.handleSuccess(resource)
+                    return TagResourceResult.Success
                 } catch (error) {
-                    utils.handleError(resource, error)
+                    throw error
                 }
-                break
             case "AWS::IAM::User":
                 try {
                     const UserName = resource.PhysicalResourceId!
@@ -28,12 +25,10 @@ export default class IAM implements ResourceTagger {
                     await iam.send(new TagUserCommand({ UserName, Tags }))
                     utils.handleSuccess(resource)
                 } catch (error) {
-                    utils.handleError(resource, error)
+                    throw error
                 }
-                break
             default:
-                utils.handleUnknown(resource)
-                break
+                return TagResourceResult.Unknown
         }
     }
 

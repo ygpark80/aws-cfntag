@@ -26,10 +26,18 @@ program
 program.showHelpAfterError()
 program.parse()
 
+;(async () => {
+    const options = program.opts()
+    const stackName = options.stackName as string
+    const tags = parseTags(options.tags as string)
+    await tagStack(stackName, tags)
+})()
+
 function parseTags(tags: string): Record<string, string> {
     // if tags is json, parse using JSON
     if (tags.startsWith("{")) return JSON.parse(tags)
 
+    // otherwise, treat it as key1=value1,key2=value2,...
     const result: Record<string, string> = {}
     for (const tag of tags.split(",")) {
         const [key, value] = tag.split("=")
@@ -37,13 +45,6 @@ function parseTags(tags: string): Record<string, string> {
     }
     return result
 }
-
-;(async () => {
-    const options = program.opts()
-    const stackName = options.stackName as string
-    const tags = parseTags(options.tags as string)
-    await tagStack(stackName, tags)
-})()
 
 async function _() {
     try {
