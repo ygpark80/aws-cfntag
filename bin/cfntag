@@ -1,10 +1,4 @@
 #!/usr/bin/env node
 
-const { execSync } = require("child_process")
-
-try {
-    execSync('npx ts-node src/main.ts', { stdio: "inherit" })
-} catch (error) {
-    console.error("Failed to execute script:", error)
-    process.exit(1)
-}
+require("ts-node").register()
+require("../src/main.ts")
