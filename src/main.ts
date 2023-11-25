@@ -5,8 +5,6 @@ import { STS } from "@aws-sdk/client-sts"
 import { CloudFormation, ListStacksOutput, StackSummary, StackStatus } from "@aws-sdk/client-cloudformation"
 import { tagStack } from "./tag"
 
-// AWS_PROFILE=aws-iot-dev ./bin/cfntag --stack-name smarthome-asr-api-dev --tags "Service=Smarthome,Application=asr,Component=api,Function=Service,Environment=dev,Team=core-platform"
-
 const description = `
 Specifies a list of tags that you want to add to the specified resources. A tag consists of a key and a value that you define.
 
