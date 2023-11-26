@@ -1,6 +1,6 @@
 import * as core from "@actions/core"
 import { tagStack } from "./tag"
-import { errorMessage, parseTags } from "./utils"
+import { parseTags } from "./utils"
 
 async function run() {
     const stackName = core.getInput("stack-name")
@@ -15,6 +15,6 @@ async function run() {
 
 if (require.main === module) {
     run().catch((error) => {
-        core.setFailed(errorMessage(error))
+        core.setFailed(error)
     })
 }
