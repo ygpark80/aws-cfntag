@@ -31,7 +31,7 @@ program.parse()
     await tagStack(stackName, tags)
 })()
 
-function parseTags(tags: string): Record<string, string> {
+export function parseTags(tags: string): Record<string, string> {
     // if tags is json, parse using JSON
     if (tags.startsWith("{")) return JSON.parse(tags)
 
