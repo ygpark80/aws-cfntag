@@ -2,6 +2,19 @@ import { CloudFormationClient, DescribeStackResourcesCommand } from "@aws-sdk/cl
 import { ResourceTagger, TagResourceResult } from "./aws"
 import Table from "cli-table3"
 
+// ncc does not like dynamic imports
+const services: Record<string, Promise<{ default: new () => ResourceTagger } | undefined>> = {
+    apigateway: import("./aws/apigateway"),
+    apigatewayv2: import("./aws/apigatewayv2"),
+    ec2: import("./aws/ec2"),
+    ecs: import("./aws/ecs"),
+    elasticloadbalancingv2: import("./aws/elasticloadbalancingv2"),
+    iam: import("./aws/iam"),
+    lambda: import("./aws/lambda"),
+    logs: import("./aws/logs"),
+    s3: import("./aws/s3"),
+}
+
 export async function tagStack(StackName: string, Tags: Record<string, string>) {
     const cfn = new CloudFormationClient()
     const { StackResources } = await cfn.send(new DescribeStackResourcesCommand({ StackName }))
@@ -10,8 +23,8 @@ export async function tagStack(StackName: string, Tags: Record<string, string>) 
         // https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html
         const serviceName = resource.ResourceType!.split('::')[1]
 
-        const module = await import(`./aws/${serviceName.toLocaleLowerCase()}`)
-        const instance: ResourceTagger = new module.default()
+        const module = await services[serviceName.toLocaleLowerCase()]
+        const instance = new module!.default() // TODO fix this later
 
         const row = {
             Result: TagResourceResult.Unknown,
