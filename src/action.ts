@@ -1,7 +1,6 @@
 import * as core from "@actions/core"
 import { tagStack } from "./tag"
 import { parseTags } from "./utils"
-import * as aws from "./aws" // DO NOT REMOVE THIS LINE
 
 async function run() {
     const stackName = core.getInput("stack-name")
