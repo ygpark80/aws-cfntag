@@ -4,6 +4,7 @@ import { Command } from "commander"
 import { STS } from "@aws-sdk/client-sts"
 import { CloudFormation, ListStacksOutput, StackSummary, StackStatus } from "@aws-sdk/client-cloudformation"
 import { tagStack } from "./tag"
+import { parseTags } from "./utils"
 
 const description = `
 Specifies a list of tags that you want to add to the specified resources. A tag consists of a key and a value that you define.
@@ -24,25 +25,12 @@ program
 program.showHelpAfterError()
 program.parse()
 
-;(async () => {
-    const options = program.opts()
-    const stackName = options.stackName as string
-    const tags = parseTags(options.tags as string)
-    await tagStack(stackName, tags)
-})()
-
-export function parseTags(tags: string): Record<string, string> {
-    // if tags is json, parse using JSON
-    if (tags.startsWith("{")) return JSON.parse(tags)
-
-    // otherwise, treat it as key1=value1,key2=value2,...
-    const result: Record<string, string> = {}
-    for (const tag of tags.split(",")) {
-        const [key, value] = tag.split("=")
-        result[key] = value
-    }
-    return result
-}
+    ; (async () => {
+        const options = program.opts()
+        const stackName = options.stackName as string
+        const tags = parseTags(options.tags as string)
+        await tagStack(stackName, tags)
+    })()
 
 async function _() {
     try {

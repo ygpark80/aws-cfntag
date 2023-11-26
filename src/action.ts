@@ -1,7 +1,6 @@
 import * as core from "@actions/core"
-import { parseTags } from "./main"
 import { tagStack } from "./tag"
-import { errorMessage } from "./utils"
+import { errorMessage, parseTags } from "./utils"
 
 async function run() {
     const stackName = core.getInput("stack-name")
