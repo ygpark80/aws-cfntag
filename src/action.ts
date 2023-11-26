@@ -4,7 +4,11 @@ import { parseTags } from "./utils"
 
 async function run() {
     const stackName = core.getInput("stack-name")
+    const profile = core.getInput("profile")
     const tags = core.getInput("tags")
+
+    if (profile) process.env.AWS_PROFILE = profile
+    console.log(process.env)
 
     console.log("🏷️ Tagging CloudFormation stack...")
     console.log(`  📋 Stack name: ${stackName}`)
