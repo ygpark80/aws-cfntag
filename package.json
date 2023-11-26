@@ -4,7 +4,7 @@
     "cfntag": "./bin/cfntag"
   },
   "scripts": {
-    "build": "rm -rf dist && tsc --project tsconfig.build.json && ncc build src/action.ts -o ./dist"
+    "build": "ncc build src/action.ts -o ./dist"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
