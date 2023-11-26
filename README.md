@@ -1,6 +1,6 @@
 # cfntag
 
-`cfntag` is a command-line tool for tagging AWS resources. Currently, it supports a limited number of AWS services. You can find the list of supported services in the [`src/aws`](./src/aws) folder. The current codebase serves my personal needs; if you need more resources to be implemented, please mention it in the [Issues](./issues) section.
+`cfntag` is a command-line tool for tagging AWS resources within a given CloudFormation Stack. Currently, it supports a limited number of AWS services. You can find the list of supported services in the [`src/aws`](./src/aws) folder. The current codebase serves my personal needs; if you need more resources to be implemented, please mention it in the [Issues](./issues) section.
 
 ## Usage
 

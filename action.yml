@@ -1,0 +1,12 @@
+name: Tagging AWS Resources from CloudFormation Stack for GitHub Actions
+description: Applies user-specified tags to AWS resources within a given CloudFormation Stack
+runs:
+  using: node20
+  main: dist/index.js
+inputs:
+  stack-name:
+    description: The name or unique stack ID of the stack to update.
+    required: true
+  tags:
+    description: Specifies a list of tags that you want to add to the specified resources.
+    required: true
