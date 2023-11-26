@@ -8,7 +8,7 @@ inputs:
     description: The name or unique stack ID of the stack to update.
     required: true
   profile:
-    description: The name of the AWS CLI profile to use.
+    description: The name of the AWS profile to use.
     required: false
   tags:
     description: Specifies a list of tags that you want to add to the specified resources.
