@@ -19,7 +19,6 @@
     "@aws-sdk/client-iam": "^3.454.0",
     "@aws-sdk/client-lambda": "^3.454.0",
     "@aws-sdk/client-s3": "^3.456.0",
-    "@aws-sdk/shared-ini-file-loader": "^3.374.0",
     "cli-table3": "^0.6.3",
     "commander": "^11.1.0",
     "ts-node": "^10.9.1"
