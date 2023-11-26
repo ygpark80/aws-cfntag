@@ -15,6 +15,7 @@ async function run() {
 
 if (require.main === module) {
     run().catch((error) => {
+        console.error(error)
         core.setFailed(error)
     })
 }
