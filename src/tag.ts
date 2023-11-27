@@ -16,10 +16,17 @@ const services: Record<string, Promise<{ default: new () => ResourceTagger } | u
 }
 
 export async function tagStack(StackName: string, Tags: Record<string, string>) {
-    const cfn = new CloudFormationClient()
-    const { StackResources } = await cfn.send(new DescribeStackResourcesCommand({ StackName }))
+    console.log("🏷️ Tagging CloudFormation stack...")
+    console.log(`📋 Stack name: ${StackName}`)
+    console.log(`🏷️ Tags:`, Tags)
+    
+    const StackResources = await getStackResources(StackName)
+    if (!StackResources) {
+        console.log(`🚫 Stack not found: ${StackName}`)
+        return
+    }
 
-    const rows = await Promise.all(StackResources!.map(async (resource) => {
+    const rows = await Promise.all(StackResources.map(async (resource) => {
         // https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html
         const serviceName = resource.ResourceType!.split('::')[1]
 
@@ -50,5 +57,16 @@ export async function tagStack(StackName: string, Tags: Record<string, string>) 
             table.push(Object.values(row))
         })
         console.log(table.toString())
+    }
+}
+
+async function getStackResources(StackName: string) {
+    const cfn = new CloudFormationClient()
+
+    try {
+        const { StackResources } = await cfn.send(new DescribeStackResourcesCommand({ StackName }))
+        return StackResources
+    } catch (e) {
+        return undefined
     }
 }

@@ -9,10 +9,6 @@ async function run() {
 
     if (profile) process.env.AWS_PROFILE = profile
 
-    console.log("🏷️ Tagging CloudFormation stack...")
-    console.log(`📋 Stack name: ${stackName}`)
-    console.log(`🏷️ Tags:`, parseTags(tags))
-
     await tagStack(stackName, parseTags(tags))
 }
 
