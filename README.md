@@ -22,7 +22,7 @@ In this command, replace `my-stack` with the name of your stack, and `Key1=Value
 See [action.yml](action.yml)
 
 ```yaml
-- uses: ygpark80/aws-cfntag@v1.0.9
+- uses: ygpark80/aws-cfntag@v1.0.10
   with:
     # The name or unique stack ID of the stack to update.
     stack-name: ''
