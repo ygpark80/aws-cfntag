@@ -23,19 +23,21 @@ export async function tagStack(StackName: string, Tags: Record<string, string>) 
         // https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html
         const serviceName = resource.ResourceType!.split('::')[1]
 
-        const module = await services[serviceName.toLocaleLowerCase()]
-        const instance = new module!.default() // TODO fix this later
-
         const row = {
             Result: TagResourceResult.Unknown,
             Type: resource.ResourceType,
             // LogicalResourceId: resource.LogicalResourceId,
             PhysicalResourceId: resource.PhysicalResourceId,
         }
-        try {
-            row.Result = await instance.tagResource(resource, Tags)
-        } catch (e) {
-            row.Result = TagResourceResult.Error
+
+        const module = await services[serviceName.toLocaleLowerCase()]
+        if (module) {
+            const instance = new module.default()
+            try {
+                row.Result = await instance!.tagResource(resource, Tags)
+            } catch (e) {
+                row.Result = TagResourceResult.Error
+            }
         }
         return row
     }))
