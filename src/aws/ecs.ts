@@ -42,7 +42,7 @@ export default class ECS implements ResourceTagger {
                     // Tag ecs tasks
                     if (resource.PhysicalResourceId) {
                         const cluster = resource.PhysicalResourceId.split("/").slice(0, 2).join("/")
-                        const serviceName = resource.PhysicalResourceId
+                        const serviceName = resource.PhysicalResourceId.split("/").slice(2).join("/")
                         const { taskArns } = await ecs.send(new ListTasksCommand({ cluster, serviceName }))
                         if (taskArns) {
                             promises.push(...taskArns.map((resourceArn) => {
