@@ -32,20 +32,25 @@ export default class ECS implements ResourceTagger {
                 try {
                     const promises: Promise<unknown>[] = []
                     const resourceArn = resource.PhysicalResourceId
+                    // Tag ecs service
                     promises.push(ecs.send(new TagResourceCommand({ resourceArn, tags: _tags })))
+                    // Enable propagateTags
                     promises.push(ecs.send(new UpdateServiceCommand({
                         service: resource.PhysicalResourceId,
                         propagateTags: "SERVICE"
                     })))
-
-                    const { taskArns } = await ecs.send(new ListTasksCommand({ serviceName: resource.PhysicalResourceId, }))
-                    if (taskArns) {
-                        promises.push(...taskArns.map((resourceArn) => {
-                            return ecs.send(new TagResourceCommand({ resourceArn, tags: _tags }))
-                        }))
+                    // Tag ecs tasks
+                    if (resource.PhysicalResourceId) {
+                        const cluster = resource.PhysicalResourceId.split("/").slice(0, 2).join("/")
+                        const serviceName = resource.PhysicalResourceId
+                        const { taskArns } = await ecs.send(new ListTasksCommand({ cluster, serviceName }))
+                        if (taskArns) {
+                            promises.push(...taskArns.map((resourceArn) => {
+                                return ecs.send(new TagResourceCommand({ resourceArn, tags: _tags }))
+                            }))
+                        }
                     }
                     await Promise.all(promises)
-
                     return TagResourceResult.Success
                 } catch (error) {
                     throw error
