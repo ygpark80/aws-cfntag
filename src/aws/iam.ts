@@ -1,7 +1,7 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { IAMClient, TagRoleCommand, TagUserCommand } from "@aws-sdk/client-iam"
+import { ResourceTagger, TagResourceResult } from "../utils"
+import utils from "../utils"
 
 export default class IAM implements ResourceTagger {
 

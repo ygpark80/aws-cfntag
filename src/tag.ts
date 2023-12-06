@@ -1,5 +1,5 @@
 import { CloudFormationClient, DescribeStackResourcesCommand } from "@aws-sdk/client-cloudformation"
-import { ResourceTagger, TagResourceResult } from "./aws"
+import { ResourceTagger, TagResourceResult } from "./utils"
 import Table from "cli-table3"
 
 // ncc does not like dynamic imports

@@ -1,7 +1,6 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { ElasticLoadBalancingV2Client, AddTagsCommand } from "@aws-sdk/client-elastic-load-balancing-v2"
+import { ResourceTagger, TagResourceResult } from "../utils"
 
 export default class ElasticLoadBalancingV2 implements ResourceTagger {
 

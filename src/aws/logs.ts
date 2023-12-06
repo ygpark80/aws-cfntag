@@ -1,7 +1,7 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { CloudWatchLogsClient, TagResourceCommand } from "@aws-sdk/client-cloudwatch-logs"
+import { ResourceTagger, TagResourceResult } from "../utils"
+import utils from "../utils"
 
 export default class Logs implements ResourceTagger {
 

@@ -1,7 +1,7 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { ECSClient, TagResourceCommand, UpdateServiceCommand, ListTasksCommand } from "@aws-sdk/client-ecs"
+import { ResourceTagger, TagResourceResult } from "../utils"
+import utils from "../utils"
 
 export default class ECS implements ResourceTagger {
 

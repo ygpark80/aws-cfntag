@@ -1,7 +1,7 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { APIGatewayClient, TagResourceCommand } from "@aws-sdk/client-api-gateway"
+import { ResourceTagger, TagResourceResult } from "../utils"
+import utils from "../utils"
 
 export default class ApiGateway implements ResourceTagger {
 

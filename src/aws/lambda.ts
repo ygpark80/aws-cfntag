@@ -1,7 +1,7 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { LambdaClient, TagResourceCommand } from "@aws-sdk/client-lambda"
+import { ResourceTagger, TagResourceResult } from "../utils"
+import utils from "../utils"
 
 export default class Lambda implements ResourceTagger {
 

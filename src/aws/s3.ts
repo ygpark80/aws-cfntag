@@ -1,13 +1,12 @@
-import { ResourceTagger, TagResourceResult } from "."
-import utils from "./utils"
 import { StackResource } from "@aws-sdk/client-cloudformation"
 import { S3Client, GetBucketTaggingCommand, PutBucketTaggingCommand } from "@aws-sdk/client-s3"
+import { ResourceTagger, TagResourceResult } from "../utils"
 
 export default class S3 implements ResourceTagger {
 
     async tagResource(resource: StackResource, tags: Record<string, string>) {
-        const s3 = new S3Client()
 
+        const s3 = new S3Client()
         switch (resource.ResourceType) {
             case "AWS::S3::Bucket":
                 try {
